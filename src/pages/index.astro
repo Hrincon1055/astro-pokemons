@@ -1,11 +1,24 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import PokemonCard from '@components/pokemons/PokemonCard.astro';
+import type { IPokemonResponse } from '@interfaces/pokemon.interface';
+import Layout from '@layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const title = 'Pokémons Static | Home';
+
+const resp = await fetch('https://pokeapi.co/api/v2/pokemon');
+const data = (await resp.json()) as IPokemonResponse;
 ---
 
-<Layout>
-	<Welcome />
+<Layout title={title}>
+  <h1 class='text-3xl'>Listado Pokémos</h1>
+  <hr class='mb-8' />
+  <section
+    aria-label='Listado de Pokémons '
+    class='grid grid-cols-1 sm:grid-cols-4 md:grid-cols-5 gap-4'>
+    {
+      data.results.map(({ name, url }) => (
+        <PokemonCard name={name} url={url} />
+      ))
+    }
+  </section>
 </Layout>

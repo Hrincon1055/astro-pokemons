@@ -1,22 +1,41 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import { ClientRouter } from 'astro:transitions';
+import { siteInfo } from '../consts/site-info';
+import '../styles/global.css';
+interface Props {
+  title?: string;
+  image?: string;
+  description?: string;
+}
+const {
+  title = siteInfo.title,
+  description = siteInfo.description,
+  image,
+} = Astro.props;
+---
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <!-- SEO -->
+    <meta name='description' content={description} />
+    <meta name='author' content='Henry Rincon' />
+    <meta name='keywords' content='astro, tailwind, css, javascript' />
+    <!-- OC Metatags -->
+    <meta name='og:description' content={description} />
+    <meta name='og:title' content={title} />
+    <meta name='og:image' content={image} />
+    <!-- Required -->
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body class='bg-slate-800 text-slate-100 m-auto max-w-3xl'>
+    <main class='mt-10'>
+      <slot />
+    </main>
+  </body>
+</html>

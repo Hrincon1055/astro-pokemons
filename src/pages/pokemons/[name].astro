@@ -1,0 +1,47 @@
+---
+import PokemonCard from '@components/pokemons/PokemonCard.astro';
+import type { IPokemonResponse } from '@interfaces/pokemon.interface';
+import Layout from '@layouts/Layout.astro';
+import type { GetStaticPaths } from 'astro';
+export const getStaticPaths = (async () => {
+  const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+  const { results } = (await resp.json()) as IPokemonResponse;
+
+  return results.map(({ name, url }) => {
+    return {
+      params: { name },
+      props: { name, url },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { name } = Astro.params;
+const { url } = Astro.props;
+const id = url.split('/').at(-2);
+const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/${id}.ogg`;
+const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+---
+
+<Layout
+  title={`Pokémon - #${id} ${name}`}
+  description={`Información sobre el pokémon ${name}`}
+  image={imageSrc}>
+  <section class='mt-10 mx-10 flex flex-col justify-center items-center'>
+    <div class='mb-4'>
+      <a href='/'>Regresar</a>
+      <h1 class='text-5xl capitalize'>{name}</h1>
+    </div>
+    <PokemonCard name={name} url={url} isBig />
+    <audio controls class='mt-5'>
+      <source src={audioSrc} type='audio/ogg' />
+      Your brouser does not support the audio tag.
+    </audio>
+  </section>
+</Layout>
+
+<style>
+  @reference '../../styles/global.css';
+  a {
+    @apply hover:underline text-blue-500;
+  }
+</style>
