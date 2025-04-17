@@ -12,6 +12,7 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 <!-- class={
   `sm:max-w-sm flex flex-col items-center justify-center rounded ${!isBig && 'border'} `
    href={`/pokemons/${name}`}>
+     href={`/pokemon/${id}`}>
 } -->
 <a
   class:list={[
@@ -20,7 +21,7 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
       border: !isBig,
     },
   ]}
-  href={`/pokemon/${id}`}>
+  href={`/pokemons/${name}`}>
   <img
     transition:name={`${name}-image`}
     src={imageSrc}

@@ -1,0 +1,24 @@
+---
+import { Counter } from '@components/Counter';
+import Title from '@components/shared/Title.astro';
+import Layout from '@layouts/Layout.astro';
+const counterValue = 20;
+---
+
+<Layout title='Favoritos'>
+  <Title>Islas</Title>
+  <div
+    style={{
+      height: '2000px',
+      ' background-color': 'blue',
+      opacity: '0.5',
+    }}>
+  </div>
+  <Counter
+    transition:persist='counter'
+    transition:persist-props
+    client:visible
+    initValue={counterValue}>
+    <Title>Counter Islas</Title>
+  </Counter>
+</Layout>

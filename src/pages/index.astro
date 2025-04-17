@@ -1,5 +1,6 @@
 ---
 import PokemonCard from '@components/pokemons/PokemonCard.astro';
+import Title from '@components/shared/Title.astro';
 import type { IPokemonResponse } from '@interfaces/pokemon.interface';
 import Layout from '@layouts/Layout.astro';
 
@@ -10,8 +11,7 @@ const data = (await resp.json()) as IPokemonResponse;
 ---
 
 <Layout title={title}>
-  <h1 class='text-3xl'>Listado Pokémos</h1>
-  <hr class='mb-8' />
+  <Title>Listado de Pokémons</Title>
   <section
     aria-label='Listado de Pokémons '
     class='grid grid-cols-1 sm:grid-cols-4 md:grid-cols-5 gap-4'>
